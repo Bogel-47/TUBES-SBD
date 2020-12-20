@@ -258,7 +258,7 @@ BEGIN
   WHERE id_room = in_id_room;
   
   UPDATE ROOM
-  SET AVAILABLE_ROOM = 'y'
+  SET AVAILABLE_ROOM = '0'
   WHERE id_room = in_id_room;
 END;
 
@@ -274,6 +274,48 @@ BEGIN
   WHERE id_room = in_id_room;
   
   UPDATE ROOM
-  SET AVAILABLE_ROOM = 'n'
+  SET AVAILABLE_ROOM = '1'
   WHERE id_room = in_id_room;
 END;
+
+SELECT * FROM ROOM
+
+INSERT INTO ROOM
+VALUES (1,2001,'KING', 1);
+
+BEGIN
+  check_out (1);
+END;
+
+CREATE OR REPLACE PACKAGE in_out AS
+PROCEDURE CHECK_IN(in_id_room NUMBER);
+PROCEDURE CHECK_OUT(in_id_room NUMBER);
+END in_out;
+
+CREATE OR REPLACE PACKAGE BODY in_out AS 
+PROCEDURE check_out (in_id_room NUMBER) IS
+r_room ROOM%ROWTYPE;
+BEGIN
+  SELECT *
+  INTO r_room
+  FROM ROOM
+  WHERE id_room = in_id_room;
+  
+  UPDATE ROOM
+  SET AVAILABLE_ROOM = '1'
+  WHERE id_room = in_id_room;
+END;
+
+PROCEDURE check_in (in_id_room NUMBER) IS
+  r_room ROOM%ROWTYPE;
+BEGIN
+  SELECT *
+  INTO r_room
+  FROM ROOM
+  WHERE id_room = in_id_room;
+  
+  UPDATE ROOM
+  SET AVAILABLE_ROOM = '0'
+  WHERE id_room = in_id_room;
+END;
+END in_out;
