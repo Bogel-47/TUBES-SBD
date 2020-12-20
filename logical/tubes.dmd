@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="tubes" id="62D083E7-2E0B-08A4-B08D-44ADB8F70FE9" version="3.5">
+<createdBy>Hargi</createdBy>
+<createdTime>2020-11-21 13:48:54 UTC</createdTime>
+<ownerDesignName>tubes</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>62D083E7-2E0B-08A4-B08D-44ADB8F70FE9</designId>
+</OSDM_Design>
