@@ -118,7 +118,8 @@ CREATE TABLE room (
     id_room         INTEGER NOT NULL,
     no_room         INTEGER NOT NULL,
     tipe_room       VARCHAR2(20 BYTE) NOT NULL,
-    available_room  CHAR(1) NOT NULL
+    available_room  CHAR(1) NOT NULL,
+    price 	    INTEGER NOT NULL
 );
 
 ALTER TABLE room ADD CONSTRAINT room_pk PRIMARY KEY ( id_room );
@@ -320,3 +321,23 @@ BEGIN
 END;
 END in_out;
 
+CREATE TABLE transaction (
+    id_transaction          INTEGER NOT NULL,
+    jumlah_total_fasilitas  NUMBER(38, 38) NOT NULL
+);
+CREATE TABLE room (
+    id_room         INTEGER NOT NULL,
+    no_room         INTEGER NOT NULL,
+    tipe_room       VARCHAR2(20 BYTE) NOT NULL,
+    available_room  CHAR(1) NOT NULL,
+    price 	    INTEGER NOT NULL
+);
+
+create or replace TRIGGER room_trig
+AFTER
+UPDATE
+ON room
+FOR EACH ROW
+begin
+INSERT INTO room VALUES(:OLD.id_room,:OLD.no_room,:OLD.tipe_room,:NEW.available_room);
+end;
