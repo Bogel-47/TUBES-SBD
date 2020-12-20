@@ -245,3 +245,35 @@ INSERT INTO REPORT (Id_report,jenis_report)
 VALUES (27,'HARGA');
 
 SELECT * FROM REPORT;
+
+CREATE OR REPLACE PROCEDURE check_in(
+    in_id_room NUMBER 
+)
+IS
+  r_room ROOM%ROWTYPE;
+BEGIN
+  SELECT *
+  INTO r_room
+  FROM ROOM
+  WHERE id_room = in_id_room;
+  
+  UPDATE ROOM
+  SET AVAILABLE_ROOM = 'y'
+  WHERE id_room = in_id_room;
+END;
+
+CREATE OR REPLACE PROCEDURE check_out(
+    in_id_room NUMBER 
+)
+IS
+  r_room ROOM%ROWTYPE;
+BEGIN
+  SELECT *
+  INTO r_room
+  FROM ROOM
+  WHERE id_room = in_id_room;
+  
+  UPDATE ROOM
+  SET AVAILABLE_ROOM = 'n'
+  WHERE id_room = in_id_room;
+END;
