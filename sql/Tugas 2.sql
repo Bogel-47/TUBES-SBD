@@ -53,7 +53,7 @@ ALTER TABLE manager ADD CONSTRAINT manager_pk PRIMARY KEY ( id_manager );
 
 CREATE TABLE pelanggan (
     id_plg          INTEGER NOT NULL,
-    no_tlp          INTEGER NOT NULL,
+    no_tlp          NUMBER(13, 13) NOT NULL,
     tgl_lahir       DATE NOT NULL,
     alamat          VARCHAR2(200 BYTE) NOT NULL,
     nama_plg        VARCHAR2(20 BYTE) NOT NULL,
@@ -287,6 +287,10 @@ BEGIN
   check_out (1);
 END;
 
+CREATE OR REPLACE FUNCTION show_room (id_room)
+IS
+
+
 CREATE OR REPLACE PACKAGE in_out AS
 PROCEDURE CHECK_IN(in_id_room NUMBER);
 PROCEDURE CHECK_OUT(in_id_room NUMBER);
@@ -320,3 +324,17 @@ BEGIN
 END;
 END in_out;
 
+CREATE OR REPLACE Function Available
+   RETURN integer
+   IS
+   count_available_room    NUMBER;
+   BEGIN
+   SELECT COUNT(id_room) INTO count_available_room FROM ROOM WHERE AVAILABLE_ROOM = 1;
+   RETURN count_available_room;
+END;
+
+SELECT Available FROM dual;
+
+SELECT * FROM ROOOM
+
+CALL IN_OUT.CHECK_IN(in_id_room NUMBER);
