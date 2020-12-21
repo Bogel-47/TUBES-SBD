@@ -341,3 +341,12 @@ FOR EACH ROW
 begin
 INSERT INTO room VALUES(:OLD.id_room,:OLD.no_room,:OLD.tipe_room,:NEW.available_room);
 end;
+CREATE OR REPLACE Function Available
+   RETURN integer
+   IS
+   count_available_room    NUMBER;
+   BEGIN
+   SELECT COUNT(id_room) INTO count_available_room FROM ROOM WHERE AVAILABLE_ROOM = 1;
+   RETURN count_available_room;
+END;
+SELECT Available FROM dual;
