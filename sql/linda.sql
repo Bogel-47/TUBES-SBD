@@ -53,7 +53,7 @@ ALTER TABLE manager ADD CONSTRAINT manager_pk PRIMARY KEY ( id_manager );
 
 CREATE TABLE pelanggan (
     id_plg          INTEGER NOT NULL,
-    no_tlp          INTEGER NOT NULL,
+    no_tlp          NUMBER(13, 13) NOT NULL,
     tgl_lahir       DATE NOT NULL,
     alamat          VARCHAR2(200 BYTE) NOT NULL,
     nama_plg        VARCHAR2(20 BYTE) NOT NULL,
@@ -280,7 +280,6 @@ BEGIN
 END;
 
 SELECT * FROM ROOM
-
 INSERT INTO ROOM
 VALUES (1,2001,'KING', 1);
 
@@ -307,6 +306,11 @@ BEGIN
   WHERE id_room = in_id_room;
 END;
 
+DECLARE
+  in_id_room NUMBER:= '1';
+BEGIN
+  in_out.check_out(in_id_room);
+END;
 PROCEDURE check_in (in_id_room NUMBER) IS
   r_room ROOM%ROWTYPE;
 BEGIN
@@ -321,14 +325,14 @@ BEGIN
 END;
 END in_out;
 
-create or replace TRIGGER room_trig
-AFTER
-UPDATE
-ON room
+CREATE TRIGGER transaction_log2 
+BEFORE INSERT OR UPDATE OF available_room ON room 
 FOR EACH ROW
-begin
-INSERT INTO room VALUES(:OLD.id_room,:OLD.no_room,:OLD.tipe_room,:NEW.available_room);
-end;
+BEGIN
+IF (:NEW.available_room IS NULL) THEN SET MESSAGE_TEXT ='room habis';
+	END IF;
+END;
+
 CREATE OR REPLACE Function Available
    RETURN integer
    IS
