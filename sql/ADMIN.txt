@@ -1,0 +1,18 @@
+SELECT * FROM ROOM
+WHERE AVAILABLE_ROOM = '0' ;
+
+CREATE OR REPLACE PROCEDURE check_out(
+    in_id_room NUMBER 
+)
+IS
+  r_room ROOM%ROWTYPE;
+BEGIN
+  SELECT *
+  INTO r_room
+  FROM ROOM
+  WHERE id_room = in_id_room;
+  
+  UPDATE ROOM
+  SET AVAILABLE_ROOM = '1'
+  WHERE id_room = in_id_room;
+END;
