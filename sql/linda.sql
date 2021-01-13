@@ -519,3 +519,24 @@ BEGIN
   INSERT INTO CUSTOMER (CUST_ID, FIRST_NAME, LAST_NAME, CUST_PHONE, DATEOFBIRTH, ADDRESS, CUST_EMAIL,SEX,CUST_EDUCATION) VALUES (CUST_ID, FIRST_NAME, LAST_NAME, CUST_PHONE, DATEOFBIRTH, ADDRESS, CUST_EMAIL,SEX,CUST_EDUCATION);
 END;
 END SIGN_UP;
+
+CREATE or REPLACE VIEW PEMESANAN_ROOM AS
+    SELECT booking.booking_id, booking.in_guest,booking.out_guest,booking.booked_date,customer.cust_id,customer.first_name,customer.cust_phone
+FROM booking
+INNER JOIN customer
+ON booking.booking_id = customer.cust_id
+where booking.booking_id = customer.cust_id;
+
+CREATE or REPLACE VIEW PEMESANAN_ROOM AS
+    SELECT booking.booking_id, booking.in_guest,booking.out_guest,booking.booked_date,customer.cust_id,customer.first_name,customer.cust_phone
+FROM booking
+INNER JOIN customer
+ON booking.booking_id = customer.cust_id
+where booking.booking_id = customer.cust_id;
+
+CREATE or REPLACE VIEW Booking_Process AS
+    SELECT booking.booking_id, booking.in_guest,booking.out_guest,booking.booked_date,customer.cust_id,customer.first_name,customer.cust_phone,booking.status
+FROM booking
+INNER JOIN customer
+ON booking.booking_id = customer.cust_id
+where booking.status = 'on process';
