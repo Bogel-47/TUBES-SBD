@@ -588,13 +588,13 @@ select * from EMPLOYEE where first_name = 'Linda'
 
 
 BEGIN
-   CHECK_OUT (2); 
+   CHECK_OUT (6); 
 END;
 
 select * from ROOM
 
 BEGIN
-  BOOKING_ROOM (08,'6/03/2020','9/03/2020',1,2,0,02,10);
+  BOOKING_ROOM (10,'6/03/2020','9/03/2020',1,2,0,02,9);
 END;
 
 
@@ -640,7 +640,6 @@ harga INT;
 JUMLAH INT;
 BEGIN
 
-INSERT INTO BOOKING (booking_id,in_guest,out_guest,numofkids,numofadults,numofbabies,customer_cust_id,ROOM_ID) VALUES (booking_id,in_guest,out_guest,numofkids,numofadults,numofbabies,customer_cust_id,ROOM);
 SELECT TYPE INTO Kelas FROM ROOM WHERE ROOM_ID = room;  
 SELECT STATUS INTO CEK FROM ROOM WHERE ROOM_ID = room;
 IF CEK = '1'
@@ -648,11 +647,13 @@ IF CEK = '1'
     UPDATE ROOM
     SET STATUS = '0'
     WHERE ROOM_ID = room;
+    INSERT INTO BOOKING (booking_id,in_guest,out_guest,numofkids,numofadults,numofbabies,customer_cust_id,ROOM_ID) VALUES (booking_id,in_guest,out_guest,numofkids,numofadults,numofbabies,customer_cust_id,ROOM);
     ELSE
     SELECT room_id INTO result FROM room WHERE status = '1' AND ROWNUM=1 AND kelas = TYPE;
 UPDATE ROOM
 SET STATUS = '0'
 WHERE ROOM_ID = result;
+INSERT INTO BOOKING (booking_id,in_guest,out_guest,numofkids,numofadults,numofbabies,customer_cust_id,ROOM_ID) VALUES (booking_id,in_guest,out_guest,numofkids,numofadults,numofbabies,customer_cust_id,result);
 
 END IF;
 
