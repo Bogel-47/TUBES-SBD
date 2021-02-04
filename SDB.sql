@@ -43,22 +43,6 @@ CREATE TABLE customer (
 
 ALTER TABLE customer ADD CONSTRAINT customer_pk PRIMARY KEY ( cust_id );
 
-CREATE TABLE discount (
-    discount_id         INTEGER NOT NULL,
-    type                VARCHAR2(30 CHAR),
-    percentage          NUMBER(5, 2),
-    booking_booking_id  INTEGER
-);
-
-ALTER TABLE discount ADD CONSTRAINT discount_pk PRIMARY KEY ( discount_id );
-
-CREATE TABLE editdsc (
-    employee_user_id      INTEGER NOT NULL,
-    discount_discount_id  INTEGER NOT NULL
-);
-
-ALTER TABLE editdsc ADD CONSTRAINT editdiscount_pk PRIMARY KEY ( employee_user_id,
-                                                                 discount_discount_id );
 
 CREATE TABLE editrm (
     employee_user_id  INTEGER NOT NULL,
@@ -162,18 +146,6 @@ ALTER TABLE booking
     ADD CONSTRAINT booking_trans_fk FOREIGN KEY ( trans_trans_id )
         REFERENCES trans ( trans_id );
 
-ALTER TABLE discount
-    ADD CONSTRAINT discount_booking_fk FOREIGN KEY ( booking_booking_id )
-        REFERENCES booking ( booking_id );
-
-ALTER TABLE editdsc
-    ADD CONSTRAINT editdiscount_discount_fk FOREIGN KEY ( discount_discount_id )
-        REFERENCES discount ( discount_id );
-
-ALTER TABLE editdsc
-    ADD CONSTRAINT editdiscount_employee_fk FOREIGN KEY ( employee_user_id )
-        REFERENCES employee ( user_id );
-
 ALTER TABLE editrm
     ADD CONSTRAINT editroom_employee_fk FOREIGN KEY ( employee_user_id )
         REFERENCES employee ( user_id );
@@ -215,6 +187,8 @@ ALTER TABLE recapas
 ALTER TABLE recapas
     ADD CONSTRAINT recap_transaction_fk FOREIGN KEY ( transaction_transaction_id )
         REFERENCES trans ( trans_id );
+CREATE VIEW price_room AS SELECT type,price from room where price > 130000;
+SELECT * FROM price_room ;
 
 
 
@@ -223,8 +197,8 @@ ALTER TABLE recapas
 -- CREATE TABLE                            12
 -- CREATE INDEX                             3
 -- ALTER TABLE                             27
--- CREATE VIEW                              0
--- ALTER VIEW                               0
+-- CREATE VIEW                              1
+-- ALTER VIEW                               1
 -- CREATE PACKAGE                           0
 -- CREATE PACKAGE BODY                      0
 -- CREATE PROCEDURE                         0
@@ -376,10 +350,7 @@ VALUES (01,'Udin','Saipudin','6/may/2020','jl.asepsutariat',08123456789,'udinsai
 
 INSERT INTO trans 
 (trans_id,total,status,msgsent,deadline,booking_booking_id,msgreceived)
-VALUES (01,900000,'success','sudah membayar','9/march/2020','01','sudah membayar');
-
-INSERT INTO discount (discount_id,type,percentage,booking_booking_id,booking_id)
-VALUES (01,'family',20,01,01);  
+VALUES (01,900000,'success','sudah membayar','9/march/2020','01','sudah membayar');  
 
 INSERT INTO booking (booking_id,in_guest,out_guest,status,numofkids,numofadults,numofbabies,booked_date)
 VALUES (01,6/3/2020,9/3/2020,'pending',1,2,0,5/3/2020);
